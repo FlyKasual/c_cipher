@@ -18,10 +18,46 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <malloc.h>
+#include <string.h>
 #include "license.h"
+#include "stralloc.h"
 
 int main(void) {
     printLicenseInformation("c_cipher", "2023", "Johannes Nielsen");
+    char* key = NULL;
+    char* msg = NULL;
+    printf("Please enter your secret key: ");
+    if (readString(&key) == 0) {
+        printf("Unable to allocate memory for the key. Exiting.\n");
+        free(key);
+        key = NULL;
+        return EXIT_FAILURE;
+    }
+    printf("Please enter a line of text do de- or encrypt using your key: ");
+    if (readString(&msg) == 0) {
+        printf("Unable to allocate memory for the message. Exiting.\n");
+        free(key);
+        key = NULL;
+        free(msg);
+        msg = NULL;
+        return EXIT_FAILURE;
+    }
+
+    size_t l = strlen(msg);
+    size_t kl = strlen(key);
+
+    for (size_t i = 0; i < l; ++i) {
+        *(msg + i) ^= *(key + (i % kl));
+        printf("%d\n", *(msg + i));
+    }
+
+    printf("%s\n", msg);
+
+    free(key);
+    key = NULL;
+    free(msg);
+    msg = NULL;
 
     return EXIT_SUCCESS;
 }

@@ -18,14 +18,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "license.h"
 
 int main(void) {
-    printf(
-        " * c_cipher  Copyright (C) 2023  Johannes Nielsen\n"
-        " * This program comes with ABSOLUTELY NO WARRANTY.\n"
-        " * This is free software, and you are welcome to redistribute it\n"
-        " * under certain conditions.\n\n"
-        " * See <https://www.gnu.org/licenses/> for details.\n"
-    );
+    printLicenseInformation("c_cipher", "2023", "Johannes Nielsen");
+
     return EXIT_SUCCESS;
 }
